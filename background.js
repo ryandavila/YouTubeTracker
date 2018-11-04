@@ -1,5 +1,27 @@
-chrome.runtime.onInstalled.addListener(function() {
-    chrome.storage.sync.set({color: '#3aa757'}, function() {
-      console.log("The color is green.");
-    });
-  });
+let startDate = new Date();
+let elapsedTime = 0;
+
+if (document.URL.contains("youtube.com")) { //checks if the website is YouTube
+
+    const focus = function() {
+            startDate = new Date();
+    };
+
+    const blur = function() {
+        const endDate = new Date();
+        const spentTime = endDate.getTime() - startDate.getTime();
+        elapsedTime += spentTime;
+    };
+
+    const beforeunload = function() {
+        const endDate = new Date();
+        const spentTime = endDate.getTime() - startDate.getTime();
+        elapsedTime += spentTime;
+    }
+}
+        // elapsedTime contains the time spent on page in milliseconds
+    // };
+    //
+    // window.addEventListener('focus', focus);
+    // window.addEventListener('blur', blur);
+    // window.addEventListener('beforeunload', beforeunload);
