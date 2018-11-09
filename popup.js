@@ -1,4 +1,4 @@
-var countDownDate = new Date().getTime() + (1000*60*2)
+var countDownDate = new Date().getTime() + (1000*60*.5)
 
 // Update the count down every 1 second
 var x = setInterval(function() {
@@ -16,6 +16,6 @@ var x = setInterval(function() {
         clearInterval(x);
         document.getElementById("timer").innerHTML = "EXPIRED";
         chrome.tabs.executeScript({
-          code: 'document.body.style.backgroundColor="red"'
+          file: 'change.css'
         });}
 }, 1000);
