@@ -1,9 +1,10 @@
-var countDownDate = new Date().getTime() + (1000*60*.5)
+var countDownDate = new Date().getTime() + (1000*60*.1)
 
 // Update the count down every 1 second
 var x = setInterval(function() {
     var now = new Date().getTime();
     var distance = countDownDate - now;
+    console.log(distance);
 
     // Time calculations for days, hours, minutes and seconds
     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -15,7 +16,7 @@ var x = setInterval(function() {
     if (distance < 0) {
         clearInterval(x);
         document.getElementById("timer").innerHTML = "EXPIRED";
-        chrome.tabs.executeScript({
+        chrome.tabs.injectCSS({
           file: 'change.css'
         });}
 }, 1000);

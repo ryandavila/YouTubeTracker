@@ -10,6 +10,12 @@
     "default_icon": "icon.png",
     "default_popup": "popup.html"
   },
+  "content_scripts": [
+    {
+    "matches": ["https://www.youtube.com/*"],
+    "css": ["change.css"]
+  }
+],
   "permissions": ["tabs","storage","declarativeContent"],
   "manifest_version": 2
 }
