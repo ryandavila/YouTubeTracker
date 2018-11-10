@@ -1,4 +1,4 @@
-var countDownDate = new Date().getTime() + (1000*60*.1)
+var countDownDate = new Date().getTime() + (1000*60)
 
 // Update the count down every 1 second
 var x = setInterval(function() {
@@ -19,4 +19,7 @@ var x = setInterval(function() {
         chrome.tabs.injectCSS({
           file: 'change.css'
         });}
+        audio = new Audio();
+        audio.src = "audio/beep.mp3"
+        audio.play();
 }, 1000);
