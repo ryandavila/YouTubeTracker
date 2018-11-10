@@ -13,13 +13,14 @@ var x = setInterval(function() {
     // Output the result in an element with id="demo"
     document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
     // If the count down is over, write some text
-    if (distance < 0) {
+    if (distance <= 0) {
         clearInterval(x);
         document.getElementById("timer").innerHTML = "EXPIRED";
-        chrome.tabs.injectCSS({
+        chrome.tabs.insertCSS({
           file: 'change.css'
-        });}
+        });
         audio = new Audio();
         audio.src = "audio/beep.mp3"
         audio.play();
-}, 1000);
+    }
+       }, 1000);

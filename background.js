@@ -18,6 +18,12 @@ if (document.URL.contains("youtube.com")) { //checks if the website is YouTube
         const spentTime = endDate.getTime() - startDate.getTime();
         elapsedTime += spentTime;
     }
+
+    // if (elapsedTime > 60) {
+    //     chrome.tabs.insertCSS({
+    //         file: 'change.css'
+    //     })
+    // }
 }
         // elapsedTime contains the time spent on page in milliseconds
     // };
