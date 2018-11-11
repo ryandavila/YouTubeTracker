@@ -1,14 +1,36 @@
-canvas, caption, center, cite, code, dd, del, dfn, div, dl, dt, em, embed, fieldset, font, form, h1, h2, h3, h4, h5, h6,
-hr, html, i, iframe, img, ins, kbd, label, legend, li, menu, object, ol, p, pre, q, s, samp, small, span, strike,
-strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, u, ul, var {
+div {
   margin: 0;
   padding: 0;
   border: 0;
   font-size: 100%;
-  background-color: #007788 !important;
-  color: rgb(151, 43, 43) !important;
+  background-color: #33FFFF !important;
+  color: #FFFF00 !important;
 }
+
+cite, code, dd, del, dfn, dl, dt, em, fieldset, font, samp, small, strike, i, iframe, img, ins, kbd, label, legend, li, object, ol, pre, q, s, 
+hr, canvas, center, html, span, menu {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  background-color: #FF0022 !important;
+  color: #FFFF00 !important;
+}
+
+strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, u, ul, var, embed, caption, h1, h2, h3, h4, h5, h6, form, p {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  background-color: #FFFF00 !important;
+  color: rgb(151, 43, 43) !important;
+  color:#FFFF00 !important;
+}
+
 
 input[type='text'], textarea {
   color: rgb(151, 43, 43) !important;
 }
+
+
+
