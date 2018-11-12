@@ -1,3 +1,20 @@
+chrome.runtime.onMessage.addListener(popupListener);
+
+function popupListener(message, sender, sendResponse) {
+    if (message.response == "timer continued") {
+                
+        }
+    
+    
+    
+}
+
+chrome.runtime.sendMessage({
+    greeting: "do-something"
+})
+
+
+
 var countDownDate = new Date().getTime() + (1000*20)
 
 // Update the count down every 1 second

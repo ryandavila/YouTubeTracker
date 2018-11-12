@@ -7,6 +7,11 @@ div {
   color: #FFFF00 !important;
 }
 
+#info, #primary-inner, #masthead-container, #comments {
+  background-color: #FFFF00 !important;
+}
+
+
 cite, code, dd, del, dfn, dl, dt, em, fieldset, font, samp, small, strike, i, iframe, img, ins, kbd, label, legend, li, object, ol, pre, q, s, 
 hr, canvas, center, html, span, menu {
   margin: 0;
@@ -17,14 +22,20 @@ hr, canvas, center, html, span, menu {
   color: #FFFF00 !important;
 }
 
-strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, u, ul, var, embed, caption, h1, h2, h3, h4, h5, h6, form, p {
+strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, u, ul, var, embed, caption, form {
   margin: 0;
   padding: 0;
   border: 0;
   font-size: 100%;
   background-color: #FFFF00 !important;
-  color: rgb(151, 43, 43) !important;
   color:#FFFF00 !important;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  color:#FF0022 !important;
+  font-weight: bold;
+  font-size: 20px;
+  background-color:#FFFF00; 
 }
 
 
