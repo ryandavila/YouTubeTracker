@@ -1,21 +1,21 @@
 chrome.runtime.onMessage.addListener(popupListener);
 
+chrome.runtime.sendMessage({
+    greeting: "test"
+});
+
 function popupListener(message, sender, sendResponse) {
-    if (message.response == "timer continued") {
-                
+    if (message.greeting == "continue timer") {
+          document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
         }
-    
-    
-    
+
+
+
 }
 
-chrome.runtime.sendMessage({
-    greeting: "do-something"
-})
 
 
-
-var countDownDate = new Date().getTime() + (1000*20)
+/* var countDownDate = new Date().getTime() + (1000*20)
 
 // Update the count down every 1 second
 var x = setInterval(function() {
@@ -40,4 +40,4 @@ var x = setInterval(function() {
         audio.src = "audio/beep.mp3"
         audio.play();
     }
-       }, 1000);
+  }, 1000); **/

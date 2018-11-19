@@ -13,7 +13,7 @@
   "content_scripts": [
     {
     "matches": ["https://www.youtube.com/*"],
-    "css": ["change.css"]
+    "js": ["background.js"]
   }
 ],
   "permissions": ["tabs","storage","declarativeContent", "https://www.youtube.com/*"],
