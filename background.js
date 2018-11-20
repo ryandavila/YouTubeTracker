@@ -1,46 +1,63 @@
-var countDownDate = new Date().getTime() + (1000*15)
-var minutes
-var seconds
+var countDownDate = new Date().getTime() + (1000 * 15);
+var minutes, seconds, categories;
+var isEntertainment = false;
+var showMore;
 
-// Update the count down every 1 second
-var x = setInterval(function() {
-  console.log(window.location.href)
-  var now = new Date().getTime();
-  var distance = countDownDate - now;
+window.onload = function () {
+    console.log("before conditional")
+    if (window.location.toString().includes("youtube.com")) {
+        showMore = document.getElementsByClassName("more-button style-scope ytd-video-secondary-info-renderer")[0].click()
+        console.log("in the conditional")
+        var categories = document.getElementsByClassName("yt-simple-endpoint style-scope yt-formatted-string");
+        categories.forEach(function (category) {
+            if (category.innerText == "Entertainment") {
+                isEntertainment = true;
+            }
+        });
+    }
 
-  // Time calculations for days, hours, minutes and seconds
-  minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  seconds = Math.floor((distance % (1000 * 60)) / 1000);
-  console.log(seconds);
+    if (isEntertainment) {
+        // Update the count down every 1 second
+        var x = setInterval(function () {
+            console.log(window.location.href)
+            var now = new Date().getTime();
+            var distance = countDownDate - now;
 
-  chrome.runtime.sendMessage({
-      greeting: "continue timer"
-  });
+            // Time calculations for days, hours, minutes and seconds
+            minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            console.log(seconds);
 
-  // If the count down is over, write some text
-  if (distance <= 0) {
-      clearInterval(x);
-      document.getElementById("timer").innerHTML = "EXPIRED";
-      chrome.runtime.sendMessage({
-          greeting: "end timer"
-      });
-      chrome.tabs.insertCSS({
-        file: 'change.css'
-      });
-      audio = new Audio();
-      audio.src = "audio/beep.mp3"
-      audio.play();
-  }
-     }, 1000);
+            chrome.runtime.sendMessage({
+                greeting: "continue timer"
+            });
+
+            // If the count down is over, write some text
+            if (distance <= 0) {
+                clearInterval(x);
+                document.getElementById("timer").innerHTML = "EXPIRED";
+                chrome.runtime.sendMessage({
+                    greeting: "end timer"
+                });
+                chrome.tabs.insertCSS({
+                    file: 'change.css'
+                });
+                audio = new Audio();
+                audio.src = "audio/beep.mp3"
+                audio.play();
+            }
+        }, 1000);
+    }
+}
 
 chrome.runtime.onMessage.addListener(bgListener);
 
 function bgListener(message, sender, sendResponse) {
-  if (message.greeting == "test") {
-    chrome.runtime.sendMessage({
-        greeting: "continue timer"
-    });
-  }
+    if (message.greeting == "test") {
+        chrome.runtime.sendMessage({
+            greeting: "continue timer"
+        });
+    }
 }
 
 
