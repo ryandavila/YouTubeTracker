@@ -3,7 +3,7 @@
   "version": "1.0",
   "description": "Track time spent on YouTube and make user aware of this",
   "background": {
-      "scripts": ["background.js", "popup.js"],
+      "scripts": ["background.js"],
       "persistent": false
   },
   "browser_action": {

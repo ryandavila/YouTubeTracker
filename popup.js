@@ -4,13 +4,15 @@ chrome.runtime.sendMessage({
     greeting: "test"
 });
 
+var background = chrome.extension.getBackgroundPage();
+
 function popupListener(message, sender, sendResponse) {
-    if (message.greeting == "continue timer") {
-          document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
+    if (message.greeting == "continue timer" && background.seconds >= 0) {
+          document.getElementById("timer").innerHTML = background.minutes + "m " + background.seconds + "s ";
         }
-
-
-
+    if (message.greeting == "end timer") {
+          document.getElementById("timer").innerHTML = "EXPIRED";;
+            }
 }
 
 
