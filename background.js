@@ -1,27 +1,38 @@
-var countDownDate = new Date().getTime() + (1000 * 15);
-var minutes, seconds, categories;
-var isEntertainment = false;
-var showMore;
+var beginningDate = new Date();
+var countdownDate = new Date().getTime() + (1000 * 30);
+var minutes, seconds, totalTime;
+var isBadCategory = false;
+var categories = [] ;
 
-window.onload = function () {
+
+window.addEventListener("load", function () {
+    setTimeout(function() {
     console.log("before conditional")
-    if (window.location.toString().includes("youtube.com")) {
-        showMore = document.getElementsByClassName("more-button style-scope ytd-video-secondary-info-renderer")[0].click()
+    if (window.location.toString().includes("youtube.com/watch")) {
+        document.getElementsByClassName("more-button style-scope ytd-video-secondary-info-renderer")[0].click()
         console.log("in the conditional")
-        var categories = document.getElementsByClassName("yt-simple-endpoint style-scope yt-formatted-string");
-        categories.forEach(function (category) {
-            if (category.innerText == "Entertainment") {
-                isEntertainment = true;
+        categories = document.getElementsByClassName("yt-simple-endpoint style-scope yt-formatted-string");
+        console.log(categories);
+        console.log("checking category");
+        let test = 0;
+        Array.prototype.forEach.call(categories, function (category) {
+            console.log(category.innerText);
+            if (category.innerText == "Entertainment" || category.innerText == "Gaming" || category.innerText == "Comedy") {
+                console.log("changed the stuff")
+                isBadCategory = true;
             }
+            console.log("looping");
         });
+        // getVideoCategoryBoolean();
     }
 
-    if (isEntertainment) {
+    if (true) {
         // Update the count down every 1 second
+        console.log("in the countdown");
         var x = setInterval(function () {
             console.log(window.location.href)
             var now = new Date().getTime();
-            var distance = countDownDate - now;
+            var distance = countdownDate - now;
 
             // Time calculations for days, hours, minutes and seconds
             minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -48,7 +59,8 @@ window.onload = function () {
             }
         }, 1000);
     }
-}
+}, 5000);
+}, false);
 
 chrome.runtime.onMessage.addListener(bgListener);
 
@@ -60,141 +72,25 @@ function bgListener(message, sender, sendResponse) {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-/*
-
-
-
-
-var countDownDate = new Date().getTime() + (1000*15)
-var minutes = "test"
-var seconds = "test"
-
-
-
-
-// Update the count down every 1 second
-var x = setInterval(function() {
-    console.log(window.location.href)
-    var now = new Date().getTime();
-    var distance = countDownDate - now;
-
-    // Time calculations for days, hours, minutes and seconds
-    minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    console.log(seconds);
-
-
-
-
-    chrome.runtime.sendMessage({
-        greeting: "continue timer"
-    });
-
-
-
-    // If the count down is over, write some text
-    if (distance <= 0) {
-        clearInterval(x);
-        //document.getElementById("timer").innerHTML = "EXPIRED";
-        chrome.runtime.sendMessage({
-            greeting: "end timer"
-        });
-        chrome.tabs.insertCSS({
-          file: 'change.css'
-        });
-        audio = new Audio();
-        audio.src = "audio/beep.mp3"
-        audio.play();
-    }
-       }, 1000);
-
-chrome.runtime.onMessage.addListener(bgListener);
-
-function bgListener(message, sender, sendResponse) {
-    if (message.greeting == "test") {
-      chrome.runtime.sendMessage({
-          greeting: "continue timer"
-      });
-    }
-
-
-    }
-
-
-
-
-
-
-
-
-/** let startDate = new Date();
-let elapsedTime = 0;
-
-if (document.URL.contains("youtube.com")) { //checks if the website is YouTube
-
-    const focus = function() {
-            startDate = new Date();
-    };
-
-    const blur = function() {
-        const endDate = new Date();
-        const spentTime = endDate.getTime() - startDate.getTime();
-        elapsedTime += spentTime;
-    };
-
-    const beforeunload = function() {
-        const endDate = new Date();
-        const spentTime = endDate.getTime() - startDate.getTime();
-        elapsedTime += spentTime;
-    }
- */
-
-/**
-
-chrome.runtime.onConnect.addListener(function (externalPort) {
-  externalPort.onDisconnect.addListener(function () {
-    console.log("onDisconnect")
-    // Do stuff that should happen when popup window closes here
-  })
-
-*/
-
-
-/**
-
-chrome.runtime.onMessage.addListener(bgListener);
-
-function bgListener(message, sender, sendResponse) {
-        if (message.greeting == "continue timer") {
-                sendResponse({response: "timer continued"})
-        }
-
-
-} */
-
-
-
-
-
-    // if (elapsedTime > 60) {
-    //     chrome.tabs.insertCSS({
-    //         file: 'change.css'
-    //     })
-    // }
+// function getVideoCategoryBoolean() {
+//     document.getElementsByClassName("more-button style-scope ytd-video-secondary-info-renderer")[0].click()
+//     categories = document.getElementsByClassName("yt-simple-endpoint style-scope yt-formatted-string");
+//         console.log(categories);
+//         console.log("checking category");
+//         Array.prototype.forEach.call(categories, function (category) {
+//             console.log(category.text)
+//             if (category.text == "Entertainment" || category.text == "Gaming" || category.text == "Comedy") {
+//                 console.log("changed the stuff")
+//                 isBadCategory = true;
+//             }
+//             console.log("looping");
+//         });
 // }
-        // elapsedTime contains the time spent on page in milliseconds
-    // };
-    //
-    // window.addEventListener('focus', focus);
-    // window.addEventListener('blur', blur);
-    // window.addEventListener('beforeunload', beforeunload);
+
+window.addEventListener("beforeunload", function (event) {
+    event.preventDefault;
+    var endingDate = new Date();
+    totalTime = beginningDate.getTime() - endingDate.getTime();
+    console.log(totalTime);
+    alert("are you sure you want to leave?");
+});
