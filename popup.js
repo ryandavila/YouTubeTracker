@@ -8,7 +8,7 @@ var background = chrome.extension.getBackgroundPage();
 
 function popupListener(message, sender, sendResponse) {
     if (message.greeting == "continue timer" && background.seconds >= 0) {
-          document.getElementById("timer").innerHTML = background.minutes + "m " 
+          document.getElementById("timer").innerHTML = background.minutes + "m"
           + background.seconds + "s ";
         }
     if (message.greeting == "end timer") {

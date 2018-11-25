@@ -1,9 +1,9 @@
-div {
+#content {
   margin: 0;
   padding: 0;
   border: 0;
   font-size: 100%;
-  background-color: #33FFFF !important;
+  background-color: #C0C0C0 !important;
   color: #FFFF00 !important;
 }
 

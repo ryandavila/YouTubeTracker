@@ -3,6 +3,18 @@ var minutes, seconds, categories;
 var isEntertainment = false;
 var showMore;
 
+chrome.runtime.onMessage.addListener(bgListener);
+
+function bgListener(message, sender, sendResponse) {
+    if (message.greeting == "test") {
+        chrome.runtime.sendMessage({
+            greeting: "continue timer"
+        });
+    }
+}
+
+
+
 window.onload = function () {
     console.log("before conditional")
     if (window.location.toString().includes("youtube.com")) {
@@ -50,15 +62,6 @@ window.onload = function () {
     }
 }
 
-chrome.runtime.onMessage.addListener(bgListener);
-
-function bgListener(message, sender, sendResponse) {
-    if (message.greeting == "test") {
-        chrome.runtime.sendMessage({
-            greeting: "continue timer"
-        });
-    }
-}
 
 
 
