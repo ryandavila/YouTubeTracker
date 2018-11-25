@@ -7,6 +7,10 @@
   color: #FFFF00 !important;
 }
 
+#columns {
+  background-color: 	#008B8B !important;
+}
+
 #info, #primary-inner, #masthead-container, #comments {
   background-color: #FFFF00 !important;
 }

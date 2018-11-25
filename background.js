@@ -1,13 +1,24 @@
 var beginningDate = new Date();
-var countdownDate = new Date().getTime() + (1000 * 30);
+var countdownDate = new Date().getTime() + (1000 * 20);
 var minutes, seconds, totalTime;
 var isBadCategory = false;
 var categories = [] ;
+
+chrome.runtime.onMessage.addListener(bgListener);
+
+function bgListener(message, sender, sendResponse) {
+    if (message.greeting == "test") {
+        chrome.runtime.sendMessage({
+            greeting: "continue timer"
+        });
+    }
+}
 
 
 window.addEventListener("load", function () {
     setTimeout(function() {
     console.log("before conditional")
+    console.log(window.location.href.toString())
     if (window.location.toString().includes("youtube.com/watch")) {
         document.getElementsByClassName("more-button style-scope ytd-video-secondary-info-renderer")[0].click()
         console.log("in the conditional")
@@ -37,16 +48,18 @@ window.addEventListener("load", function () {
             // Time calculations for days, hours, minutes and seconds
             minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            console.log(distance)
             console.log(seconds);
+
 
             chrome.runtime.sendMessage({
                 greeting: "continue timer"
             });
 
             // If the count down is over, write some text
-            if (distance <= 0) {
+            if (distance < 0) {
                 clearInterval(x);
-                document.getElementById("timer").innerHTML = "EXPIRED";
+                //document.getElementById("timer").innerHTML = "EXPIRED";
                 chrome.runtime.sendMessage({
                     greeting: "end timer"
                 });
@@ -62,15 +75,8 @@ window.addEventListener("load", function () {
 }, 5000);
 }, false);
 
-chrome.runtime.onMessage.addListener(bgListener);
 
-function bgListener(message, sender, sendResponse) {
-    if (message.greeting == "test") {
-        chrome.runtime.sendMessage({
-            greeting: "continue timer"
-        });
-    }
-}
+
 
 // function getVideoCategoryBoolean() {
 //     document.getElementsByClassName("more-button style-scope ytd-video-secondary-info-renderer")[0].click()

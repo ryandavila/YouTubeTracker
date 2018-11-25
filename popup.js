@@ -4,19 +4,25 @@ chrome.runtime.sendMessage({
     greeting: "test"
 });
 
+var expired = false;
+
 var background = chrome.extension.getBackgroundPage();
 
 function popupListener(message, sender, sendResponse) {
     if (message.greeting == "continue timer" && background.seconds >= 0) {
-          document.getElementById("timer").innerHTML = background.minutes + "m"
-          + background.seconds + "s ";
+          document.getElementById("timer").innerHTML = background.minutes + "m "
+          + background.seconds + "s";
         }
     if (message.greeting == "end timer") {
           document.getElementById("timer").innerHTML = "EXPIRED";;
+          expired = true;
+
             }
 }
 
-
+if (expired) {
+  document.getElementById("timer").innerHTML = "EXPIRED";
+}
 
 /* var countDownDate = new Date().getTime() + (1000*20)
 
