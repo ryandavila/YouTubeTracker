@@ -12,10 +12,10 @@
   },
   "content_scripts": [
     {
-    "matches": ["https://www.youtube.com/*"],
-    "js": ["background.js"]
-  }
-],
-  "permissions": ["management", "tabs","storage","declarativeContent", "https://www.youtube.com/*"],
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "permissions": ["management", "tabs", "storage", "declarativeContent", "https://www.youtube.com/*", "http://*/*"],
   "manifest_version": 2
 }
