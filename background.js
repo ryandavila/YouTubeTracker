@@ -1,6 +1,6 @@
 var beginningDate = new Date();
 var countdownDate = new Date().getTime() + (1000 * 20);
-
+var expired = false;
 
 chrome.runtime.onMessage.addListener(function (message, callback) {
     if (message.greeting == "timePassed") {
@@ -10,6 +10,7 @@ chrome.runtime.onMessage.addListener(function (message, callback) {
         audio = new Audio();
         audio.src = "audio/beep.mp3"
         audio.play();
+        expired = true;
     }
     else if (message.greeting == "storeTimes") {
         totalTime = parseInt(message.time);
