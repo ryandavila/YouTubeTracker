@@ -25,7 +25,7 @@ function bgListener(message) {
                         console.log("changed the stuff");
                         isBadCategory = true;
                     }
-    
+
                     if (true) { //changed to cause CSS changes for every video watched
                         // Update the count down every 1 second
                         console.log("in the countdown");
@@ -33,7 +33,7 @@ function bgListener(message) {
                             // console.log(window.location.href)
                             var now = new Date().getTime();
                             var distance = countdownDate - now;
-    
+
                             // Time calculations for days, hours, minutes and seconds
                             minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                             seconds = Math.floor((distance % (1000 * 60)) / 1000);
