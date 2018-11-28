@@ -1,12 +1,12 @@
 var beginningDate = new Date();
-var countdownDate = new Date().getTime() + (1000 * 20);
+var countdownDate = new Date().getTime() + (1000 * 180); //sets timer to around 3 minutes
 var minutes, seconds, totalTime;
 var isBadCategory = false;
 var visitedYouTube = false;
 
 chrome.runtime.onMessage.addListener(bgListener);
 
-function bgListener(message, sender, sendResponse) {
+function bgListener(message) {
     console.log(message);
     if (message.greeting == "visited") {
         visitedYouTube = true;
@@ -26,7 +26,7 @@ function bgListener(message, sender, sendResponse) {
                         isBadCategory = true;
                     }
     
-                    if (isBadCategory) {
+                    if (true) { //changed to cause CSS changes for every video watched
                         // Update the count down every 1 second
                         console.log("in the countdown");
                         var x = setInterval(function () {
@@ -37,7 +37,7 @@ function bgListener(message, sender, sendResponse) {
                             // Time calculations for days, hours, minutes and seconds
                             minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                             seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                            console.log(distance);
+                            // console.log(distance);
                             chrome.runtime.sendMessage({
                                 greeting: "continue timer",
                                 seconds: seconds.toString(),
