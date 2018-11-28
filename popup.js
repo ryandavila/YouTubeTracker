@@ -29,5 +29,7 @@ document.getElementById("reset_button").addEventListener("click",  function(){
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         chrome.tabs.update(tabs[0].id, {url: tabs[0].url});
     });
-    background.expired = false;
+    chrome.runtime.sendMessage({
+      greeting: "reset"
+    });
 });
