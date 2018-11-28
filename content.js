@@ -1,74 +1,93 @@
 var beginningDate = new Date();
-var countdownDate = new Date().getTime() + (1000 * 20);
+var countdownDate = new Date().getTime() + (1000 * 180); //sets timer to around 3 minutes
 var minutes, seconds, totalTime;
 var isBadCategory = false;
+var visitedYouTube = false;
 
 chrome.runtime.onMessage.addListener(bgListener);
 
-function bgListener(message, sender, sendResponse) {
-    if (message.greeting == "test") {
-        chrome.runtime.sendMessage({
-            greeting: "continue timer"
-        });
+function bgListener(message) {
+    console.log(message);
+    if (message.greeting == "visited") {
+        visitedYouTube = true;
+        console.log("Youtube already visited, CSS injected");
+    }
+    else if (message.greeting == "notvisited") {
+        console.log("Doing stuff...");
+        setTimeout(function () {
+            console.log("before website check")
+            if (window.location.toString().includes("youtube.com/watch")) {
+                document.getElementsByClassName("more-button style-scope ytd-video-secondary-info-renderer")[0].click();
+                console.log("before timeout");
+                setTimeout(function () {
+                    videoInfo = document.querySelector("ytd-expander ytd-metadata-row-container-renderer:nth-child(2)").innerText.trim();
+                    if (videoInfo.includes("Entertainment") || videoInfo.includes("Gaming") || videoInfo.includes("Comedy")) {
+                        console.log("changed the stuff");
+                        isBadCategory = true;
+                    }
+
+                    if (true) { //changed to cause CSS changes for every video watched
+                        // Update the count down every 1 second
+                        console.log("in the countdown");
+                        var x = setInterval(function () {
+                            // console.log(window.location.href)
+                            var now = new Date().getTime();
+                            var distance = countdownDate - now;
+
+                            // Time calculations for days, hours, minutes and seconds
+                            minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                            seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                            // console.log(distance);
+                            chrome.runtime.sendMessage({
+                                greeting: "continue timer",
+                                seconds: seconds.toString(),
+                                minutes: minutes.toString()
+                            });
+                            // If the count down is over, write some text
+                            if (distance < 0) {
+                                clearInterval(x);
+                                chrome.runtime.sendMessage({
+                                    greeting: "timePassed",
+                                    seconds: seconds.toString(),
+                                    minutes: minutes.toString(),
+                                    visited: "true"
+                                });
+                                visitedYouTube = true;
+                            }
+                        }, 500);
+                    }
+                }, 1000);
+            }
+        }, 2500);
     }
 }
 
 window.addEventListener("load", function () {
-    setTimeout(function () {
-        console.log("before conditional")
-        if (window.location.toString().includes("youtube.com/watch")) {
-            document.getElementsByClassName("more-button style-scope ytd-video-secondary-info-renderer")[0].click();
-            console.log("before timeout");
-            setTimeout(function () {
-                videoInfo = document.querySelector("ytd-expander ytd-metadata-row-container-renderer:nth-child(2)").innerText.trim();
-                if (videoInfo.includes("Entertainment") || videoInfo.includes("Gaming") || videoInfo.includes("Comedy")) {
-                    console.log("changed the stuff");
-                    isBadCategory = true;
-                }
-
-                if (isBadCategory) {
-                    // Update the count down every 1 second
-                    console.log("in the countdown");
-                    var x = setInterval(function () {
-                        // console.log(window.location.href)
-                        var now = new Date().getTime();
-                        var distance = countdownDate - now;
-
-                        // Time calculations for days, hours, minutes and seconds
-                        minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                        seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                        console.log(distance);
-                        chrome.runtime.sendMessage({
-                            greeting: "continue timer",
-                            seconds: seconds.toString(),
-                            minutes: minutes.toString()
-                        });
-                        // If the count down is over, write some text
-                        if (distance < 0) {
-                            clearInterval(x);
-                            chrome.runtime.sendMessage({
-                                greeting: "timePassed"
-                            });
-                        }
-                    }, 500);
-
-                }
-
-
-            }, 1000);
-        }
-
-    }, 5000);
+    if (window.location.toString().includes("youtube.com")) {
+        chrome.runtime.sendMessage({
+            greeting: "checkVisited"
+        });
+    }
 }, false);
 
 window.addEventListener("beforeunload", function (event) {
     event.preventDefault;
     var endingDate = new Date();
-    totalTime = beginningDate.getTime() - endingDate.getTime();
+    totalTime = endingDate.getTime() - beginningDate.getTime();
     console.log(totalTime);
-    chrome.runtime.sendMessage({
-        greeting: "storeTimes",
-        time: totalTime
-    });
+    if (visitedYouTube) {
+        chrome.runtime.sendMessage({
+            greeting: "storeTimes",
+            time: totalTime,
+            visited: "true"
+        });
+    }
+    else {
+        chrome.runtime.sendMessage({
+            greeting: "storeTimes",
+            time: totalTime,
+            visited: "false"
+        });
+    }
     alert("are you sure you want to leave?");
 });

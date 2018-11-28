@@ -16,6 +16,6 @@
       "js": ["content.js"]
     }
   ],
-  "permissions": ["management", "tabs", "storage", "declarativeContent", "https://www.youtube.com/*", "http://*/*"],
+  "permissions": ["management", "tabs", "storage", "declarativeContent", "https://www.youtube.com/*", "*://*/*"],
   "manifest_version": 2
 }

@@ -3,9 +3,7 @@ var countdownDate = new Date().getTime() + (1000 * 20);
 var expired = false;
 
 chrome.runtime.onMessage.addListener(function (message, callback) {
-    if (message.greeting == "reset") {
-      expired = false;
-    }
+    if (message.greeting == "e")
     if (message.greeting == "timePassed") {
         chrome.tabs.insertCSS(null, {
             file: 'change.css'
