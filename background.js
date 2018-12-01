@@ -1,10 +1,11 @@
-
 var beginningDate = new Date();
 var countdownDate = new Date().getTime() + (1000 * 20);
-var expired = false;
 var visitedYouTube = false;
 var times = [];
 var total_time_spent = localStorage.getItem('timeSpent');
+
+var expired = false;
+var intervention = true; 
 
 setInterval(function() {
   chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
@@ -20,33 +21,49 @@ setInterval(function() {
   });
 }, 1000);
 
-function getTimeSpend() {
+function getTimeSpent() {
   return localStorage.getItem('timeSpent');
 }
 
 
-
-
 chrome.runtime.onMessage.addListener(function (message, callback) {
-    if (message.greeting == "checkVisited") {
-        if (visitedYouTube) {
+  console.log(message);
+  if (message.greeting == "checkIntervention") {
+    if (intervention) {
+    chrome.runtime.sendMessage({
+      greeting: "interventionOn"
+    });
+  }  else {
+    chrome.runtime.sendMessage({
+      greeting: "interventionOff"
+    });
+  }
+} else if (message.greeting == "turnOn") {
+  intervention = true;
+} else if (message.greeting == "turnOff") {
+  intervention = false;
+}
+
+  else if (message.greeting == "checkVisited") {
+        if (visitedYouTube && intervention) {
             sendMessageToCurrentTab({
                 greeting: "visited"
             });
-            chrome.tabs.insertCSS(null, {
-                file: 'change.css'
-            });
+            insertIntoTabs();
+            audio.play();
         }
         else {
             sendMessageToCurrentTab({
                 greeting: "notvisited"
             });
+            if (typeof audio !== 'undefined') {
+              audio.pause();
+              audio.currentTime = 0;
+            }
         }
     }
-    else if (message.greeting == "timePassed") {
-        chrome.tabs.insertCSS(null, {
-            file: 'change.css'
-        });
+    else if (message.greeting == "timePassed" && intervention) {
+        insertIntoTabs();
         audio = new Audio();
         audio.src = "audio/beep.mp3"
         audio.play();
@@ -56,7 +73,7 @@ chrome.runtime.onMessage.addListener(function (message, callback) {
     else if (message.greeting == "checkTotalTime") {
       chrome.runtime.sendMessage({
           greeting: "sendtime",
-          seconds: getTimeSpend().toString()
+          seconds: getTimeSpent().toString()
       })
     }
     else if (message.greeting == "resetTotalTime") {
@@ -64,50 +81,19 @@ chrome.runtime.onMessage.addListener(function (message, callback) {
     }
 });
 
-
-/** if (window.location.toString().includes("youtube.com")) {
-  console.log("YES")
-  window.onload = function onload() {
-    const now = new Date();
-    const lastLeave = localStorage.getItem('lastLeave');
-    if (!lastLeave || now - lastLeave >= (1000*60)) {
-      localStorage.setItem('lastEnter', now);
-    }
-  }
-  window.onunload = function onunload() {
-    localStorage.setItem('lastLeave', new Date());
-  }
-} */
-
-/**
-window.onload = function onload() {
-  const now = new Date();
-  const lastLeave = localStorage.getItem('lastLeave');
-  if (!lastLeave || now - lastLeave >= (1000*60)) {
-    localStorage.setItem('lastEnter', now);
-  }
-}
-window.onunload = function onunload() {
-  localStorage.setItem('lastLeave', new Date());
-}
-
-function getTimeSpend() {
-  return new Date() - localStorage.getItem('lastEnter');
-} */
-
-
-
-
-
-
-
-
-
-
-
-
 function sendMessageToCurrentTab(msg) {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         chrome.tabs.sendMessage(tabs[0].id, msg);
     });
+}
+
+function insertIntoTabs() {
+  chrome.tabs.query({url: "https://www.youtube.com/*"}, function(tabs) {
+    console.log(tabs);
+    for (var i = 0; i < tabs.length; i++) {
+      chrome.tabs.insertCSS(tabs[i].id, {
+        file: 'change.css'
+    });
+    }
+  })
 }
