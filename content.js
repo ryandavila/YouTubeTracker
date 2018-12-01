@@ -1,8 +1,9 @@
 var beginningDate = new Date();
-var countdownDate = new Date().getTime() + (1000 * 180); //sets timer to around 3 minutes
+var countdownDate = new Date().getTime() + (1000 * 20); //sets timer to around 3 minutes
 var minutes, seconds, totalTime;
 var isBadCategory = false;
 var visitedYouTube = false;
+
 
 chrome.runtime.onMessage.addListener(bgListener);
 
@@ -12,7 +13,8 @@ function bgListener(message) {
         visitedYouTube = true;
         console.log("Youtube already visited, CSS injected");
     }
-    else if (message.greeting == "notvisited") {
+
+    if (message.greeting == "notvisited") {
         console.log("Doing stuff...");
         setTimeout(function () {
             console.log("before website check")
@@ -48,7 +50,7 @@ function bgListener(message) {
                                 clearInterval(x);
                                 chrome.runtime.sendMessage({
                                     greeting: "timePassed",
-                                    seconds: seconds.toString(),
+                                    seconds: seconds,
                                     minutes: minutes.toString(),
                                     visited: "true"
                                 });
@@ -62,6 +64,9 @@ function bgListener(message) {
     }
 }
 
+
+
+
 window.addEventListener("load", function () {
     if (window.location.toString().includes("youtube.com")) {
         chrome.runtime.sendMessage({
@@ -69,25 +74,3 @@ window.addEventListener("load", function () {
         });
     }
 }, false);
-
-window.addEventListener("beforeunload", function (event) {
-    event.preventDefault;
-    var endingDate = new Date();
-    totalTime = endingDate.getTime() - beginningDate.getTime();
-    console.log(totalTime);
-    if (visitedYouTube) {
-        chrome.runtime.sendMessage({
-            greeting: "storeTimes",
-            time: totalTime,
-            visited: "true"
-        });
-    }
-    else {
-        chrome.runtime.sendMessage({
-            greeting: "storeTimes",
-            time: totalTime,
-            visited: "false"
-        });
-    }
-    alert("are you sure you want to leave?");
-});

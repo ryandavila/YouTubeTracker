@@ -1,5 +1,7 @@
+
 chrome.runtime.onMessage.addListener(popupListener);
 var time;
+var total_time;
 
 var background = chrome.extension.getBackgroundPage();
 
@@ -7,40 +9,34 @@ function popupListener(message) {
   if (message.greeting == "continue timer") {
     document.getElementById("timer").innerHTML = message.minutes + "m "
       + message.seconds + "s";
-    document.getElementById("reset_button").style.visibility = "hidden";
-    document.getElementById("time_button").style.visibility = "hidden";
-    document.getElementById("total_time").style.visibility = "hidden";
   }
   else if (message.greeting == "timePassed") {
-    document.getElementById("reset_button").style.visibility = "visible";
     document.getElementById("timer").innerHTML = "EXPIRED";
-    document.getElementById("time_button").style.visibility = "visible";
-    document.getElementById("total_time").style.visibility = "visible";
-  } 
+  }
   else if (message.greeting == "timesSent") {
     time = message.time
   }
+  else if (message.greeting == "sendtime") {
+      d = parseInt(message.seconds)
+      h = Math.floor(d / 3600);
+      m = Math.floor(d % 3600 / 60);
+      s = Math.floor(d % 3600 % 60);
+      alert(('0' + h).slice(-2) + "h " + ('0' + m).slice(-2) + "m " + ('0' + s).slice(-2) +"s")
+    }
 }
 
 if (background.expired) {
     document.getElementById("timer").innerHTML = "EXPIRED";
 }
 
-document.getElementById("reset_button").addEventListener("click",  function(){
-    //window.alert("reset");
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        chrome.tabs.update(tabs[0].id, {url: tabs[0].url});
-    });
+document.getElementById("time_tracker").addEventListener("click",  function(){
     chrome.runtime.sendMessage({
-      greeting: "reset"
-    });
+      greeting: "checkTotalTime"
+    })
 });
 
-document.getElementById("time_button").addEventListener("click",  function(){
-  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    chrome.runtime.sendMessage("requestTimes");
-    setTimeout(() => {
-      document.getElementById.innerHTML = "Total Time: " + time;
-    }, 1000);
-  });
+document.getElementById("time_reset").addEventListener("click",  function(){
+    chrome.runtime.sendMessage({
+      greeting: "resetTotalTime"
+    })
 });

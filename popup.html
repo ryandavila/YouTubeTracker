@@ -7,10 +7,13 @@
       <!-- <script src="popup.js"></script> -->
       <style>
        button {
-         height: 30px;
-         width: 60px;
+         height: 40px;
+         width: 140px;
          outline: none;
          margin: 10px;
+       }
+       form {
+         margin-left: 20px;
        }
      </style>
     </head>
@@ -20,9 +23,13 @@
       <div id="container1">
         <p id="timer"></p>
       </div>
-      <button id="reset_button" type="button">Reset</button>
-      <button id="time_button" type="button">Request Total Time</button>
-      <label id="total_time">Click above for time!</label>
+      <form>
+      Intervention Effects:<br>
+      <input type="radio" name="colors" id="on_button">On
+      <input type="radio" name="colors" id="off_button">Off
+      </form>
+      <button id="time_tracker" type="button">Request Total Time Spent on Youtube</button>
+      <button id="time_reset" type="button">Reset Total Time Spent on Youtube</button>
       <script src="popup.js"></script>
     </body>
   </html>
