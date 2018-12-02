@@ -31,6 +31,7 @@ function bgListener(message) {
                         // Update the count down every 1 second
                         console.log("in the countdown");
                         var x = setInterval(function () {
+                            // console.log(window.location.href)
                             var now = new Date().getTime();
                             var distance = countdownDate - now;
 
@@ -61,6 +62,8 @@ function bgListener(message) {
         }, 2500);
     }
 }
+
+
 
 
 window.addEventListener("load", function () {

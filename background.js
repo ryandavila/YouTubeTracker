@@ -5,7 +5,7 @@ var times = [];
 var total_time_spent = localStorage.getItem('timeSpent');
 
 var expired = false;
-var intervention = true; 
+var intervention = true;
 
 setInterval(function() {
   chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
