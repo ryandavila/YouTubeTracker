@@ -1,7 +1,7 @@
 {
   "name": "YouTubeTracker",
   "version": "1.0",
-  "description": "Track time spent on YouTube and make user aware of this",
+  "description": "Track time spent on YouTube and allow the user to be alerted",
   "background": {
       "scripts": ["background.js"],
       "persistent": false
