@@ -25,8 +25,6 @@ function getTimeSpend() {
 }
 
 
-
-
 chrome.runtime.onMessage.addListener(function (message, callback) {
     if (message.greeting == "checkVisited") {
         if (visitedYouTube) {

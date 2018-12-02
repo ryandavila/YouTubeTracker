@@ -25,6 +25,7 @@ function popupListener(message) {
     }
 }
 
+
 if (background.expired) {
     document.getElementById("timer").innerHTML = "EXPIRED";
 }
