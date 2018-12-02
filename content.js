@@ -1,6 +1,6 @@
 
 var beginningDate = new Date();
-var countdownDate = new Date().getTime() + (1000 * 20); //sets timer to around 3 minutes
+var countdownDate = new Date().getTime() + (1000 * 480); //sets timer to around 3 minutes
 var minutes, seconds, totalTime;
 var isBadCategory = false;
 var visitedYouTube = false;
