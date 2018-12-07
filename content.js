@@ -12,7 +12,7 @@ function bgListener(message) {
         visitedYouTube = true;
         console.log("Youtube already visited, CSS injected");
     }
-
+    
     if (message.greeting == "notvisited") {
         console.log("Doing stuff...");
         setTimeout(function () {
